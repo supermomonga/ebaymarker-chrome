@@ -1,0 +1,57 @@
+<!doctype html>
+<head>
+<meta charset="utf-8" />
+<title>eBay marker option page</title>
+<style type="text/css">
+h1 {
+    color: #333;
+    font: normal normal bold 120% "Verdana", sans-serif;
+}
+#wrapper {
+    display: inline-block;
+    border: 1px solid #333;
+    border-radius: 10px;
+    margin: 10px; padding: 10px;
+}
+#username {
+    width: 100px;
+    border: 1px solid #99f;
+    background-color: #fff;
+}
+#username:focus {
+    border: 1px solid #fbb;
+    background-color: #ffe;
+}
+label {
+    color: #666;
+}
+label:after {
+    content : " : ";
+  }
+  textarea{
+    width: 200px;
+    height: 300px;
+    display: block;
+    margin: 5px 0 20px 0;
+  }
+</style>
+</head>
+<h1>設定</h1>
+<div>
+  <p>
+    You should write only one word at each lines.
+  </p>
+</div>
+<div id="options">
+  <h2>Positive words</h2>
+  <textarea id="ebaymarker_positive_words"></textarea>
+  <h2>Negative words</h2>
+  <textarea id="ebaymarker_negative_words"></textarea>
+  <h2>Not either</h2>
+  <textarea id="ebaymarker_normal_words"></textarea>
+	<button id="save-button">Save</button>
+</div>
+
+<script src="options.js"></script>
+</body>
+</html>
