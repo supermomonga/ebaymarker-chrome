@@ -1,13 +1,4 @@
 
-function get_local_storage(key, def){
-	var result = localStorage[key];
-	if( result ){
-		return result;
-	}
-	else{
-		return def;
-	}
-}
 
 function $(id) {
   return document.getElementById(id);
@@ -15,16 +6,25 @@ function $(id) {
 
 
 function save_options(){
-	localStorage["ebaymarker_positive_words"] = $("ebaymarker_positive_words").value;
-	localStorage["ebaymarker_negative_words"] = $("ebaymarker_negative_words").value;
-	localStorage["ebaymarker_normal_words"]   = $("ebaymarker_normal_words").value;
+  options = {
+    "ebaymarker_positive_words" : $("ebaymarker_positive_words").value,
+    "ebaymarker_negative_words" : $("ebaymarker_negative_words").value,
+    "ebaymarker_normal_words"   : $("ebaymarker_normal_words").value
+  };
+  chrome.storage.local.set(options, function(){
+    window.alert("Saved.");
+  });
 }
 
 function load_options(){
-	var name = get_local_storage("fldUserName", "homu");
-	$("ebaymarker_positive_words").value = get_local_storage("ebaymarker_positive_words" , "");
-	$("ebaymarker_negative_words").value = get_local_storage("ebaymarker_negative_words" , "");
-	$("ebaymarker_normal_words").value   = get_local_storage("ebaymarker_normal_words"   , "");
+  keys = [
+    "ebaymarker_positive_words", "ebaymarker_negative_words", "ebaymarker_normal_words"
+  ];
+  chrome.storage.local.get(keys, function(values){
+    $("ebaymarker_positive_words").value = values["ebaymarker_positive_words"];
+    $("ebaymarker_negative_words").value = values["ebaymarker_negative_words"];
+    $("ebaymarker_normal_words").value   = values["ebaymarker_normal_words"];
+  });
 }
 
 function setup(){

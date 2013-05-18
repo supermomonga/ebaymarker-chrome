@@ -6,13 +6,24 @@
   "description": "Automatically mark the important words on eBay.",
 
   "permissions": [
+    "storage",
     "tabs",
-    "*://vi.raptor.ebaydesc.com/*"
+    "*://vi.raptor.ebaydesc.com/*",
+    "*://*.ebay.com/*"
   ],
 
-  "background": {
-    "scripts": ["ebaymarker.js"]
-  },
+  "content_scripts": [
+  {
+    "matches": [
+      "*://vi.raptor.ebaydesc.com/*", "*://*.ebay.com/*"
+      ],
+    "js": ["ebaymarker.js"],
+    "css": ["ebaymarker.css"],
+    "run_at": "document_end",
+    "all_frames": true
+  }
+  ],
+
 
   "options_page" : "options.html"
 }

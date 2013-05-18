@@ -1,36 +1,22 @@
-function get_local_storage(key, def){
-  var result = localStorage[key];
-  if( result ){
-    return result;
-  }
-  else{
-    return def;
-  }
+
+
+function setmarker(words, cssclass){
+    words.split('\n').forEach(function(word){
+      if(word != ''){
+        document.body.innerHTML=document.body.innerHTML.replace(new RegExp('(>[^<]*)' + word + '([^<]*<)', 'ig'),'$1<span class="ebaymarker-' + cssclass + '">' + word + '</span>$2');
+      }
+    });
+}
+
+function setmarkers(words){
+    setmarker(words["ebaymarker_positive_words"], 'positive');
+    setmarker(words["ebaymarker_negative_words"], 'negative');
+    setmarker(words["ebaymarker_normal_words"  ], 'normal');
 }
 
 
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  if ( changeInfo.status == "complete" ) {
-    chrome.tabs.insertCSS(null, { "file": "ebaymarker.css" });
-    words = {};
-    words['positive'] = get_local_storage("ebaymarker_positive_words", "").split("\n");
-    words['negative'] = get_local_storage("ebaymarker_negative_words", "").split("\n");
-    words['normal']   = get_local_storage("ebaymarker_normal_words", "").split("\n");
-    words['positive'].forEach(function(word){
-      script = "document.body.innerHTML=document.body.innerHTML.replace(new RegExp('" + word + "', 'ig'),'<span class=\"ebaymarker-positive\">" + word + "</span>');focus();";
-      chrome.tabs.executeScript(null, { "code" : script });
-      console.log("positive : " + word);
-    });
-    words['negative'].forEach(function(word){
-      script = "document.body.innerHTML=document.body.innerHTML.replace(new RegExp('" + word + "', 'ig'),'<span class=\"ebaymarker-negative\">" + word + "</span>');focus();";
-      chrome.tabs.executeScript(null, { "code" : script });
-      console.log("negative : " + word);
-    });
-    words['normal'].forEach(function(word){
-      script = "document.body.innerHTML=document.body.innerHTML.replace(new RegExp('" + word + "', 'ig'),'<span class=\"ebaymarker-normal\">" + word + "</span>');focus();";
-      chrome.tabs.executeScript(null, { "code" : script });
-      console.log("normal : " + word);
-    });
-  }
-});
+keys = [
+"ebaymarker_positive_words", "ebaymarker_negative_words", "ebaymarker_normal_words"
+];
+chrome.storage.local.get(keys, setmarkers);
 
