@@ -4,6 +4,7 @@ function setmarker(words, cssclass){
     words.split('\n').forEach(function(word){
       if(word != ''){
         document.body.innerHTML=document.body.innerHTML.replace(new RegExp('(>[^<]*)' + word + '([^<]*<)', 'ig'),'$1<span class="ebaymarker-' + cssclass + '">' + word + '</span>$2');
+        // document.getElementById('desc_div').innerHTML = document.getElementById('desc_div').innerHTML.replace(new RegExp('(>[^<]*)' + word + '([^<]*<)', 'ig'),'$1<span class="ebaymarker-' + cssclass + '">' + word + '</span>$2');
       }
     });
 }
